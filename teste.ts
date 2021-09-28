@@ -1,4 +1,4 @@
 function teste (): number {
-  return 1
+  return 2
 }
 teste()
