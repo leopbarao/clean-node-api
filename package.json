@@ -4,7 +4,7 @@
   "description": "API com boas praticas",
   "main": "index.js",
   "scripts": {
-    "test": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --watch",
     "test:staged": "jest --passWithNoTests"
   },
   "author": "Leonardo Barão",
