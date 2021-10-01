@@ -4,8 +4,8 @@
   "description": "API com boas praticas",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "test:staged": "jest"
+    "test": "jest --passWithNoTests",
+    "test:staged": "jest --passWithNoTests"
   },
   "author": "Leonardo Barão",
   "license": "ISC",
