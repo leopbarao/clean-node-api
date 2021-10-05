@@ -4,8 +4,12 @@
   "description": "API com boas praticas",
   "main": "index.js",
   "scripts": {
-    "test": "jest --passWithNoTests --watch",
-    "test:staged": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand",
+    "test:unit": "npm test -- --watch --config=jest-unit-config.js",
+    "test:integration": "npm test -- --watch --config=jest-integration-config.js",
+    "test:staged": "npm test -- --findRelatedTests src",
+    "test:ci": "npm test -- --coverage"
   },
   "author": "Leonardo Barão",
   "license": "ISC",
