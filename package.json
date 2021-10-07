@@ -4,7 +4,7 @@
   "description": "API com boas praticas",
   "main": "index.js",
   "scripts": {
-    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch --config=jest-unit-config.js",
     "test:integration": "npm test -- --watch --config=jest-integration-config.js",
