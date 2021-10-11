@@ -1,6 +1,6 @@
 import { MongoHelper as sut } from './mongo-helper'
 
-describe('Name of the group', () => {
+describe('Mongo Helper', () => {
   beforeAll(async () => {
     await sut.connect(process.env.MONGO_URL as string)
   })
