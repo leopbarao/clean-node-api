@@ -7,7 +7,7 @@ export class SignUpController implements Controller {
   private readonly addAccount: AddAccount
   private readonly validation: Validation
 
-  constructor (emailValidator: EmailValidator, addAccount: AddAccount, validation: Validation) {
+  constructor (emailValidator: EmailValidator, addAccount: AddAccount, validation?: Validation) {
     this.emailValidator = emailValidator
     this.addAccount = addAccount
     this.validation = validation
@@ -15,7 +15,9 @@ export class SignUpController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      this.validation.validate(httpRequest)
+      if (this.validation) {
+        this.validation.validate(httpRequest)
+      }
       const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
       for (const field of requiredFields) {
         if (!httpRequest.body[field]) {
