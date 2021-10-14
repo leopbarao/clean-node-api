@@ -1,4 +1,4 @@
-export { CompareFieldsValidation } from './compare-fields-validation'
-export { EmailValidation } from './email-validation'
-export { RequiredFieldValidation } from './required-field-validation'
-export { ValidationComposite } from './validation-composite'
+export * from './compare-fields-validation'
+export * from './email-validation'
+export * from './required-field-validation'
+export * from './validation-composite'
