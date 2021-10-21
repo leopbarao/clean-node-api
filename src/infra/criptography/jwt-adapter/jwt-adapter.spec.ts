@@ -5,7 +5,7 @@ jest.mock('jsonwebtoken', () => ({
   async sign (): Promise<string> {
     return await new Promise(resolve => resolve('any_token'))
   },
-  async decode (): Promise<string> {
+  async verify (): Promise<string> {
     return await new Promise(resolve => resolve('any_value'))
   }
 }))
@@ -39,23 +39,23 @@ describe('Jwt Adapter', () => {
     })
   })
 
-  describe('Jwt Adapter Decode', () => {
-    test('Should call decode with correct token', async () => {
+  describe('Jwt Adapter Verify', () => {
+    test('Should call verify with correct token', async () => {
       const sut = makeSut()
-      const decodeSpy = jest.spyOn(jwt, 'decode')
+      const verifySpy = jest.spyOn(jwt, 'verify')
       await sut.decrypt('any_token')
-      expect(decodeSpy).toHaveBeenLastCalledWith('any_token')
+      expect(verifySpy).toHaveBeenLastCalledWith('any_token', 'secret')
     })
 
-    test('Should return a value on decode succeeds', async () => {
+    test('Should return a value on verify succeeds', async () => {
       const sut = makeSut()
       const value = await sut.decrypt('any_token')
       expect(value).toBe('any_value')
     })
 
-    test('Should throw if decode throws', async () => {
+    test('Should throw if verify throws', async () => {
       const sut = makeSut()
-      jest.spyOn(jwt, 'decode').mockImplementationOnce(() => {
+      jest.spyOn(jwt, 'verify').mockImplementationOnce(() => {
         throw new Error()
       })
       const promise = sut.decrypt('any_token')
