@@ -1,9 +1,9 @@
 import { LoadSurveysController } from './load-surveys-controller'
 import { LoadSurveys, SurveyModel } from './load-surveys-controller-protocols'
 import { noContent, ok, serverError } from '../../../helpers/http/http-helper'
+import MockDate from 'mockdate'
 
 const makeFakeSurveys = (): SurveyModel[] => {
-  const date = new Date()
   return [{
     id: 'any_id',
     question: 'any_question',
@@ -11,7 +11,7 @@ const makeFakeSurveys = (): SurveyModel[] => {
       image: 'any_image',
       answer: 'any_answer'
     }],
-    date
+    date: new Date()
   }, {
     id: 'other_id',
     question: 'other_question',
@@ -19,7 +19,7 @@ const makeFakeSurveys = (): SurveyModel[] => {
       image: 'other_image',
       answer: 'other_answer'
     }],
-    date
+    date: new Date()
   }]
 }
 
@@ -49,6 +49,14 @@ const makeSut = (): SutTypes => {
 }
 
 describe('LoadSurveys Controller', () => {
+  beforeAll(() => {
+    MockDate.set(new Date())
+  })
+
+  afterAll(() => {
+    MockDate.reset()
+  })
+
   test('Should call LoadSurveys', async () => {
     const { sut, loadSurveysStub } = makeSut()
     const loadSpy = jest.spyOn(loadSurveysStub, 'load')
