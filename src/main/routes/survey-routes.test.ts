@@ -8,6 +8,23 @@ import { sign } from 'jsonwebtoken'
 let surveyCollection: Collection
 let accountCollection: Collection
 
+const makeAccessToken = async (): Promise<string> => {
+  const resInsert = await accountCollection.insertOne({
+    name: 'Leonardo Barão',
+    email: 'leopbarao@gmail.com',
+    password: '123',
+    role: 'admin'
+  })
+  const accessToken = sign({ id: resInsert.insertedId }, env.jwtSecret)
+  await accountCollection.updateOne({
+    _id: resInsert.insertedId
+  }, {
+    $set: { accessToken }
+  })
+
+  return accessToken
+}
+
 describe('Survey Routes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
@@ -42,21 +59,9 @@ describe('Survey Routes', () => {
     })
 
     test('Should return 204 on add survey use valid accessToken', async () => {
-      const resInsert = await accountCollection.insertOne({
-        name: 'Leonardo Barão',
-        email: 'leopbarao@gmail.com',
-        password: '123',
-        role: 'admin'
-      })
-      const accessToken = sign({ id: resInsert.insertedId }, env.jwtSecret)
-      await accountCollection.updateOne({
-        _id: resInsert.insertedId
-      }, {
-        $set: { accessToken }
-      })
       await request(app)
         .post('/api/surveys')
-        .set('x-access-token', accessToken)
+        .set('x-access-token', await makeAccessToken())
         .send({
           question: 'Question 1',
           answers: [{
@@ -79,18 +84,6 @@ describe('Survey Routes', () => {
     })
 
     test('Should return 200 on load surveys use valid accessToken', async () => {
-      const resInsert = await accountCollection.insertOne({
-        name: 'Leonardo Barão',
-        email: 'leopbarao@gmail.com',
-        password: '123'
-      })
-      const accessToken = sign({ id: resInsert.insertedId }, env.jwtSecret)
-      await accountCollection.updateOne({
-        _id: resInsert.insertedId
-      }, {
-        $set: { accessToken }
-      })
-
       await surveyCollection.insertMany([{
         question: 'any_question',
         answers: [{
@@ -109,7 +102,7 @@ describe('Survey Routes', () => {
 
       await request(app)
         .get('/api/surveys')
-        .set('x-access-token', accessToken)
+        .set('x-access-token', await makeAccessToken())
         .expect(200)
     })
   })
