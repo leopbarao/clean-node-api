@@ -9,8 +9,8 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
     const surveyResultsCollection = await MongoHelper.getCollection('surveyResults')
     const { surveyId, accountId, date, answer } = data
     const surveyResult = await surveyResultsCollection.findOneAndUpdate(
-      [{ surveyId }, { accountId }],
-      { $set: { surveyId, accountId, date, answer } },
+      { surveyId, accountId },
+      { $set: { date, answer } },
       { upsert: true, returnDocument: ReturnDocument.AFTER }
     )
     return MongoHelper.map(surveyResult.value)
