@@ -1,6 +1,6 @@
 import { EmailValidation } from './email-validation'
-import { InvalidParamError } from '../../presentation/errors'
-import { EmailValidator } from '../../validation/protocols/email-validator'
+import { InvalidParamError } from '@/presentation/errors'
+import { EmailValidator } from '@/validation/protocols/email-validator'
 
 //  factory - duble de testes
 const makeEmailValidator = (): EmailValidator => {
