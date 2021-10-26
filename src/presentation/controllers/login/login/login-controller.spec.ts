@@ -2,7 +2,7 @@ import { LoginController } from './login-controller'
 import { Validation, HttpRequest, Authentication } from './login-controller-protocols'
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers/http/http-helper'
-import { AuthenticationModel } from '@/domain/usecases/authentication'
+import { AuthenticationModel } from '@/domain/usecases/account/authentication'
 
 //  factory
 const makeValidation = (): Validation => {
